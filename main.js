@@ -2,10 +2,10 @@ Number.prototype.clamp = function(min, max) {
   return Math.min(Math.max(this, min), max);
 };
 
-let currentTimeout = NULL;
+var currentTimeout = NaN;
 
 function start(){
-    let c = document.getElementById('pixelart');
+    var c = document.getElementById('pixelart');
     let ctx = c.getContext('2d');
     ctx.moveTo(0,0);
     
@@ -37,13 +37,13 @@ function start(){
         ctx.fillRect(x, y, px, px);
         //Save image to the server
         clearTimeout(currentTimeout);
-        currentTimeout = setTimeout(save(c), 5000);
+        currentTimeout = setTimeout(function(){save(c);}, 5000);
         // Load image from server
         let img = new Image();
         img.src = 'saves/save.png';
         ctx.drawImage(img, 0, 0);
-    })
-}
+    });
+};
 
 function save(c) {
     // Convert to encoded Base64 data
@@ -58,4 +58,4 @@ function save(c) {
     }).done(function(o) {
         console.log(o);
     });
-}
+};
